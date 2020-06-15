@@ -1,0 +1,30 @@
+.wrapper{
+   background:yellow;
+    max-width: 960px;
+    margin: auto;
+    text-align:center;
+}
+.innerWrapper{
+    display:flex;
+    justify-content: center;
+
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 20px;
+}
+
+.item1{
+    background-color: red;
+    
+}
+.item2{
+    background-color: green;
+}
+
+.item3{
+    background-color: blue;
+    grid-column-start:1;
+    grid-column-end: 3;
+}
