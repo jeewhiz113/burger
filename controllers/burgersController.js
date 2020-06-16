@@ -13,14 +13,23 @@ make the routes for the app.
 */
 
 router.post("/api/newburger", function(req, res){
-
-    console.log(req.body.name);
-    //OK so now we have the post request working, we code in the database manipulations in orm.
-    burger.insertOne(req.body.name);
+    burger.insertOne(req.body.name, function(result){
+        console.log(result);  //So at the caller of the insertOne function, 
+        //the console.log(result) funcitonality is called when everything is finished.
+    });
 });
 
 router.get("/", function(req, res) {
-    res.render("index", {});
+    burger.selectAll(function(data){
+        var wishToEat = data.filter(burger=>burger.devoured == 0);
+        var devoured = data.filter(burger=>burger.devoured == 1);
+        var allBurgers = {
+            wiskToEat : wishToEat,
+            devoured : devoured
+        }        
+        res.render("index", allBurgers);
+        //ok so the next step is to render allBurgers based on the name of the property.
+    });
 });
 
 module.exports = router;

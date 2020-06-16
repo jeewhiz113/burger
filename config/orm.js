@@ -6,15 +6,23 @@ var connection = require("../config/connection.js");
 
 // Object for all our SQL statement functions.
 var orm = {
-  selectAll: function(){
-
+  
+  selectAll: function(cb){
+    var queryString = "SELECT * FROM burgers";
+    connection.query(queryString, function(err, result){
+      if (err){
+        throw err;
+      }
+      cb(result);
+    })
   },
-  insertOne: function(name){
+  insertOne: function(name, cb){
     var queryString = "INSERT INTO burgers (name) VALUES ('"  + name + "')";
     connection.query(queryString, function(err, result){
         if (err){
             throw err;
         }
+        cb(result);  //some res.send(result); function.
     })
   },
   // An example of objColVals would be {name: panther, sleepy: true}
