@@ -13,8 +13,10 @@ var burger = {
             cb(res);
         });
     },
-    updateOne: function(){
-        orm.updateOne();
+    updateOne: function(id, cb){  
+        orm.updateOne(id, function(res){  //It is important to construct a dummy function to be passed to the orm.js here.
+            cb(res);
+        });
     },
 };
 

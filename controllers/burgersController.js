@@ -4,18 +4,10 @@ var burger = require("../models/burger.js");
 
 var router = express.Router();
 
-/*
-make the routes for the app.
-1. get: "/" display all the burgers (eaten or not)
-2. post: "/api/burgers", post the burger to the database.
-3. put: "api/bugers/:id", update whether the burger has been devoured or not.
-
-*/
-
 router.post("/api/newburger", function(req, res){
     burger.insertOne(req.body.name, function(result){
-        console.log(result);  //So at the caller of the insertOne function, 
-        //the console.log(result) funcitonality is called when everything is finished.
+        console.log(result);
+        res.json({id: result.insertId});  //This line is very important to reload the page.  Why?
     });
 });
 
@@ -27,8 +19,21 @@ router.get("/", function(req, res) {
             wiskToEat : wishToEat,
             devoured : devoured
         }        
+        //console.log(allBurgers);
         res.render("index", allBurgers);
-        //ok so the next step is to render allBurgers based on the name of the property.
+    });
+});
+
+router.put("/api/burger/:id", function(req, res){
+    var id = req.params.id;
+    //console.log("Burger # " + id + " is devoured.");
+    burger.updateOne(id, function(result){  //result is the response from the sql server.
+        if (result.changedRows == 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+          } else {
+            res.status(200).end();
+          }
     });
 });
 

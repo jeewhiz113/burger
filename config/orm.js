@@ -26,9 +26,16 @@ var orm = {
     })
   },
   // An example of objColVals would be {name: panther, sleepy: true}
-  updateOne: function() {
-  
-},
+  updateOne: function(id, cb) {
+    var queryString = "UPDATE burgers SET devoured = 1 WHERE id = " + id;
+    console.log(queryString);
+    connection.query(queryString, function(err, result){
+      if (err){
+        throw err;
+      }
+      cb(result);
+    })
+  },
 };
 
 // Export the orm object for the model (cat.js).
