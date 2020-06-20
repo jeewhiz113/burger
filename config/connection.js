@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 
 var connection;
 if(process.env.JAWSDB_URl){
-  connection = mysql.createConnection(provess.env.JAWSDB_URl);
+  connection = mysql.createConnection(process.env.JAWSDB_URl);
 }else {
   connection = mysql.createConnection({
     host: "localhost",
